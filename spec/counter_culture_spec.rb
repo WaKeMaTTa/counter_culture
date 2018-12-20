@@ -1946,6 +1946,21 @@ describe "CounterCulture" do
         expect(employee.reload.poly_images_count).to eq(1)
       end
 
+      it "#size should use cache counter" do
+        2.times { PolyImage.create(imageable: employee) }
+        1.times { PolyImage.create(imageable: product1) }
+
+        mess_up_counts
+
+        expect(product2.reload.poly_images_count).to eq(0)
+        expect(product1.reload.poly_images_count).to eq(100)
+        expect(employee.reload.poly_images_count).to eq(100)
+
+        expect(product2.reload.poly_images.size).to eq(0)
+        expect(product1.reload.poly_images.size).to eq(100)
+        expect(employee.reload.poly_images.size).to eq(100)
+      end
+
       it "can fix counts for polymorphic correctly" do
         2.times { PolyImage.create(imageable: employee) }
         1.times { PolyImage.create(imageable: product1) }
