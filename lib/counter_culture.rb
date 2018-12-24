@@ -5,6 +5,7 @@ require 'active_support/lazy_load_hooks'
 require 'counter_culture/extensions'
 require 'counter_culture/counter'
 require 'counter_culture/reconciler'
+require 'counter_culture/active_record/associations/has_many_association.rb'
 
 module CounterCulture
   mattr_accessor :batch_size
@@ -20,3 +21,5 @@ end
 ActiveSupport.on_load(:active_record) do
   include CounterCulture::Extensions
 end
+
+ActiveRecord::Associations::HasManyAssociation.send :include, CounterCulture::ActiveRecord::Associations::HasManyAssociation
