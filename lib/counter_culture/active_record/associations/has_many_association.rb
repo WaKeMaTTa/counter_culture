@@ -5,20 +5,6 @@ module CounterCulture
 
         private
 
-        # Returns the number of records in this collection.
-        #
-        # If the association has a counter cache it gets that value. Otherwise
-        # it will attempt to do a count via SQL, bounded to <tt>:limit</tt> if
-        # there's one. Some configuration options like :group make it impossible
-        # to do an SQL count, in those cases the array count will be used.
-        #
-        # That does not depend on whether the collection has already been loaded
-        # or not. The +size+ method is the one that takes the loaded flag into
-        # account and delegates to +count_records+ if needed.
-        #
-        # If the collection is empty the target is set to an empty array and
-        # the loaded flag is set to true as well.
-        #
         # Overwrite method of `ActiveRecord::Associations:HasManyAssociation`
         def count_records
           count = if has_cached_counter?
